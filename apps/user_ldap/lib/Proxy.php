@@ -70,6 +70,7 @@ abstract class Proxy {
 		static $db;
 		static $coreUserManager;
 		static $coreNotificationManager;
+		static $logger;
 		if ($fs === null) {
 			$ocConfig = \OC::$server->getConfig();
 			$fs = new FilesystemHelper();
