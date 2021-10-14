@@ -72,9 +72,10 @@ class UpdateGroups extends \OC\BackgroundJob\TimedJob {
 		$actualGroups = self::getGroupBE()->getGroups();
 
 		if (empty($actualGroups) && empty($knownGroups)) {
-			\OCP\Util::writeLog('user_ldap',
+			$this->logger->info(
 				'bgJ "updateGroups" – groups do not seem to be configured properly, aborting.',
-				ILogger::INFO);
+				['app' => 'user_ldap']
+			);
 			return;
 		}
 
@@ -82,7 +83,10 @@ class UpdateGroups extends \OC\BackgroundJob\TimedJob {
 		self::handleCreatedGroups(array_diff($actualGroups, $knownGroups));
 		self::handleRemovedGroups(array_diff($knownGroups, $actualGroups));
 
-		\OCP\Util::writeLog('user_ldap', 'bgJ "updateGroups" – Finished.', ILogger::DEBUG);
+		$this->logger->debug(
+			'bgJ "updateGroups" – Finished.',
+			['app' => 'user_ldap']
+		);
 	}
 
 	/**
@@ -161,9 +165,10 @@ class UpdateGroups extends \OC\BackgroundJob\TimedJob {
 			$users = serialize(self::getGroupBE()->usersInGroup($createdGroup));
 			$query->execute([$createdGroup, $users]);
 		}
-		\OCP\Util::writeLog('user_ldap',
+		$this->logger->debug(
 			'bgJ "updateGroups" – FINISHED dealing with created Groups.',
-			ILogger::DEBUG);
+			['app' => 'user_ldap']
+		);
 	}
 
 	/**
@@ -182,9 +187,10 @@ class UpdateGroups extends \OC\BackgroundJob\TimedJob {
 				ILogger::INFO);
 			$query->execute([$removedGroup]);
 		}
-		\OCP\Util::writeLog('user_ldap',
+		$this->logger->debug(
 			'bgJ "updateGroups" – FINISHED dealing with removed groups.',
-			ILogger::DEBUG);
+			['app' => 'user_ldap']
+		);
 	}
 
 	/**
