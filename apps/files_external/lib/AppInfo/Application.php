@@ -31,6 +31,7 @@ namespace OCA\Files_External\AppInfo;
 
 use OCA\Files_External\Config\ConfigAdapter;
 use OCA\Files_External\Config\UserPlaceholderHandler;
+use OCA\Files_External\Lib\Auth\SMB\KerberosApacheAuth;
 use OCA\Files_External\Listener\GroupDeletedListener;
 use OCA\Files_External\Listener\UserDeletedListener;
 use OCA\Files_External\Lib\Auth\AmazonS3\AccessKey;
@@ -180,6 +181,7 @@ class Application extends App implements IBackendProvider, IAuthMechanismProvide
 			// Specialized mechanisms
 			$container->query(AccessKey::class),
 			$container->query(KerberosAuth::class),
+			$container->query(KerberosApacheAuth::class),
 		];
 	}
 }
