@@ -472,7 +472,7 @@ Feature: sharing
     Then the OCS status code should be "404"
     And the HTTP status code should be "200"
 
-  Scenario: do not allow to increase link share permissions on sub reshare
+  Scenario: do allow to create links on a shared folder with two mountpoints
     Given As an "admin"
     And user "user0" exists
     And user "user1" exists
